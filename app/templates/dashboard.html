@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h1 class="text-primary mb-4">Dashboard General</h1>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <div class="card border-success shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title text-success">Pacientes</h5>
+                <p class="card-text fs-4">{{ total_pacientes }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <div class="card border-primary shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title text-primary">Odontólogos</h5>
+                <p class="card-text fs-4">{{ total_odontologos }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <div class="card border-warning shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title text-warning">Turnos</h5>
+                <p class="card-text fs-4">{{ total_turnos }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <div class="card border-info shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title text-info">Turnos Futuros</h5>
+                <p class="card-text fs-4">{{ turnos_futuros }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <div class="card border-secondary shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title text-secondary">Historias Clínicas</h5>
+                <p class="card-text fs-4">{{ total_historias }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <div class="card border-dark shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title text-dark">Tratamientos</h5>
+                <p class="card-text fs-4">{{ total_tratamientos }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

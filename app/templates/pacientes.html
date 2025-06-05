@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Pacientes{% endblock %}
+
+{% block content %}
+<h1 class="text-success mb-4">Listado de Pacientes</h1>
+
+<a href="{{ url_for('nuevo_paciente') }}" class="btn btn-primary mb-3">Agregar nuevo paciente</a>
+
+    {% if pacientes %}
+<ul class="list-group">
+    {% for paciente in pacientes %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ paciente.nombre }} {{ paciente.apellido }}
+
+        <div class="btn-group">
+            <a href="{{ url_for('editar_paciente', id=paciente.id) }}" class="btn btn-sm btn-warning">Editar</a>
+
+            <form method="POST" action="{{ url_for('eliminar_paciente', id=paciente.id) }}" style="display:inline;" onsubmit="return confirm('¿Seguro que deseas eliminar este paciente?');">
+                <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+            </form>
+
+            <!-- Nuevo botón de Historia Clínica -->
+            <a href="{{ url_for('detalle_historia', id=paciente.id) }}" class="btn btn-sm btn-info">Historia Clínica</a>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+    {% else %}
+<div class="alert alert-info">No hay pacientes cargados aún.</div>
+    {% endif %}
+{% endblock %}

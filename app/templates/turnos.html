@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Turnos{% endblock %}
+
+{% block content %}
+<h1 class="text-primary mb-4">Listado de Turnos</h1>
+
+<a href="{{ url_for('nuevo_turno') }}" class="btn btn-success mb-3">Registrar nuevo turno</a>
+
+    {% if turnos %}
+<ul class="list-group">
+    {% for turno in turnos %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ turno.fecha.strftime('%d/%m/%Y %H:%M') }} |
+        Paciente: {{ turno.paciente.nombre }} {{ turno.paciente.apellido }} |
+        Odontólogo: {{ turno.odontologo.nombre }} {{ turno.odontologo.apellido }}
+
+        <div class="btn-group">
+            <a href="{{ url_for('editar_turno', id=turno.id) }}" class="btn btn-sm btn-warning">Editar</a>
+
+            <form method="POST" action="{{ url_for('eliminar_turno', id=turno.id) }}" style="display:inline;" onsubmit="return confirm('¿Seguro que deseas eliminar este turno?');">
+                <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+            </form>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+    {% else %}
+<div class="alert alert-info">No hay turnos registrados aún.</div>
+    {% endif %}
+{% endblock %}

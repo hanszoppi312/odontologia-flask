@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Historia Clínica de {{ paciente.nombre }}{% endblock %}
+
+{% block content %}
+<h1>Historia Clínica de {{ paciente.nombre }} {{ paciente.apellido }}</h1>
+
+    {% if historias %}
+<ul class="list-group">
+    {% for historia in historias %}
+    <li class="list-group-item">
+        <strong>Fecha:</strong> {{ historia.fecha.strftime('%d/%m/%Y') }}<br>
+        <strong>Descripción:</strong> {{ historia.descripcion }}<br>
+
+        {% if historia.tratamientos %}
+        <strong>Tratamientos:</strong>
+        <ul>
+            {% for tratamiento in historia.tratamientos %}
+            <li>{{ tratamiento.nombre }} - {{ tratamiento.descripcion }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <em>Sin tratamientos registrados.</em>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+    {% else %}
+<div class="alert alert-info">Este paciente no tiene historias clínicas registradas aún.</div>
+    {% endif %}
+{% endblock %}

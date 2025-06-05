@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Historias Clínicas{% endblock %}
+
+{% block content %}
+<h1 class="text-primary mb-4">Listado de Historias Clínicas</h1>
+
+<a href="{{ url_for('nueva_historia_clinica') }}" class="btn btn-success mb-3">Registrar nueva historia</a>
+
+    {% if historias %}
+<ul class="list-group">
+    {% for historia in historias %}
+    <li class="list-group-item">
+        {{ historia.fecha.strftime('%d/%m/%Y %H:%M') }} |
+        Paciente: {{ historia.paciente.nombre }} {{ historia.paciente.apellido }} |
+        {{ historia.descripcion }}
+    </li>
+    {% endfor %}
+</ul>
+    {% else %}
+<div class="alert alert-info">No hay historias clínicas registradas aún.</div>
+    {% endif %}
+{% endblock %}

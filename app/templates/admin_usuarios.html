@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Administrar Usuarios{% endblock %}
+
+{% block content %}
+<h1 class="text-primary mb-4">Administración de Usuarios</h1>
+
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Nombre de Usuario</th>
+            <th>Rol</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for usuario in usuarios %}
+        <tr>
+            <td>{{ usuario.id }}</td>
+            <td>{{ usuario.username }}</td>
+            <td>{{ usuario.rol }}</td>
+            <td class="d-flex">
+
+                <!-- Botón editar -->
+                <a href="{{ url_for('editar_usuario', id=usuario.id) }}" class="btn btn-sm btn-warning me-2">Editar</a>
+
+                <!-- Formulario de eliminación con CSRF real -->
+                <form method="POST" action="{{ url_for('eliminar_usuario', id=usuario.id) }}" class="d-inline" onsubmit="return confirm('¿Estás seguro de eliminar este usuario?');">
+                    {{ eliminar_forms[usuario.id].hidden_tag() }}
+                    {{ eliminar_forms[usuario.id].submit(class="btn btn-sm btn-danger") }}
+                </form>
+
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

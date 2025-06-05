@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Odontólogos{% endblock %}
+
+{% block content %}
+<h1 class="text-primary mb-4">Listado de Odontólogos</h1>
+
+<a href="{{ url_for('nuevo_odontologo') }}" class="btn btn-success mb-3">Agregar nuevo odontólogo</a>
+
+    {% if odontologos %}
+<ul class="list-group">
+    {% for odontologo in odontologos %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ odontologo.nombre }} {{ odontologo.apellido }} - {{ odontologo.especialidad }}
+
+        <div class="btn-group">
+            <a href="{{ url_for('editar_odontologo', id=odontologo.id) }}" class="btn btn-sm btn-warning">Editar</a>
+
+            <form method="POST" action="{{ url_for('eliminar_odontologo', id=odontologo.id) }}" style="display:inline;" onsubmit="return confirm('¿Seguro que deseas eliminar este odontólogo?');">
+                <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+            </form>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+    {% else %}
+<div class="alert alert-info">No hay odontólogos cargados aún.</div>
+    {% endif %}
+{% endblock %}

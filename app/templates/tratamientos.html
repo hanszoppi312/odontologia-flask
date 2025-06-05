@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Tratamientos{% endblock %}
+
+{% block content %}
+<h1 class="text-primary mb-4">Listado de Tratamientos</h1>
+
+<a href="{{ url_for('nuevo_tratamiento') }}" class="btn btn-success mb-3">Registrar nuevo tratamiento</a>
+
+    {% if tratamientos %}
+<ul class="list-group">
+    {% for tratamiento in tratamientos %}
+    <li class="list-group-item">
+        {{ tratamiento.nombre }} | {{ tratamiento.descripcion }} |
+        Historia Clínica de {{ tratamiento.historia_clinica.paciente.nombre }} {{ tratamiento.historia_clinica.paciente.apellido }}
+    </li>
+    {% endfor %}
+</ul>
+    {% else %}
+<div class="alert alert-info">No hay tratamientos registrados aún.</div>
+    {% endif %}
+{% endblock %}

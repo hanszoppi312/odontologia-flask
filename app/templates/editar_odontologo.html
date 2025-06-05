@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Odontólogo{% endblock %}
+
+{% block content %}
+<h1>Editar Odontólogo</h1>
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+
+    <div class="mb-3">
+        {{ form.nombre.label(class="form-label") }}
+        {{ form.nombre(class="form-control") }}
+        {% for error in form.nombre.errors %}
+        <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        {{ form.apellido.label(class="form-label") }}
+        {{ form.apellido(class="form-control") }}
+        {% for error in form.apellido.errors %}
+        <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        {{ form.especialidad.label(class="form-label") }}
+        {{ form.especialidad(class="form-control") }}
+        {% for error in form.especialidad.errors %}
+        <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    {{ form.submit(class="btn btn-primary") }}
+</form>
+{% endblock %}

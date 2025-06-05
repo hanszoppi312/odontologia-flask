@@ -1,0 +1,89 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>a8736a2e-993a-4a31-81fb-10fd3902ff57</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>app.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <Name>odonto</Name>
+    <RootNamespace>odonto</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="app.py" />
+    <Compile Include="app\models.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="app\routes.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="app\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="app\forms.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="app\decorators.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="run.py">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="app\" />
+    <Folder Include="app\templates\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".dockerignore" />
+    <Content Include=".env" />
+    <Content Include=".flaskenv" />
+    <Content Include="app\templates\admin_usuarios.html" />
+    <Content Include="app\templates\base.html" />
+    <Content Include="app\templates\dashboard.html" />
+    <Content Include="app\templates\detalle_historia.html" />
+    <Content Include="app\templates\editar_odontologo.html" />
+    <Content Include="app\templates\editar_paciente.html" />
+    <Content Include="app\templates\editar_turno.html" />
+    <Content Include="app\templates\editar_usuario.html" />
+    <Content Include="app\templates\historias_clinicas.html" />
+    <Content Include="app\templates\home.html" />
+    <Content Include="app\templates\login.html" />
+    <Content Include="app\templates\nueva_historia_clinica.html" />
+    <Content Include="app\templates\nuevo_odontologo.html" />
+    <Content Include="app\templates\nuevo_paciente.html" />
+    <Content Include="app\templates\nuevo_tratamiento.html" />
+    <Content Include="app\templates\nuevo_turno.html" />
+    <Content Include="app\templates\odontologos.html" />
+    <Content Include="app\templates\pacientes.html" />
+    <Content Include="app\templates\registro.html" />
+    <Content Include="app\templates\reporte_turnos_odontologo.html" />
+    <Content Include="app\templates\top_pacientes.html" />
+    <Content Include="app\templates\tratamientos.html" />
+    <Content Include="app\templates\turnos.html" />
+    <Content Include="Dockerfile" />
+    <Content Include="gitignore" />
+    <Content Include="Procfile" />
+    <Content Include="requirements.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+  <!-- Uncomment the CoreCompile target to enable the Build command in
+       Visual Studio and specify your pre- and post-build commands in
+       the BeforeBuild and AfterBuild targets below. -->
+  <!--<Target Name="CoreCompile" />-->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>

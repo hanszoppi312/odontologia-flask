@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Nueva Historia Clínica{% endblock %}
+
+{% block content %}
+<h1>Nueva Historia Clínica</h1>
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+
+    <div class="mb-3">
+        {{ form.paciente.label(class="form-label") }}
+        {{ form.paciente(class="form-control") }}
+        {% for error in form.paciente.errors %}
+        <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        {{ form.descripcion.label(class="form-label") }}
+        {{ form.descripcion(class="form-control") }}
+        {% for error in form.descripcion.errors %}
+        <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    {{ form.submit(class="btn btn-primary") }}
+</form>
+{% endblock %}

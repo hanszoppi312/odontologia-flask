@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Reporte de ranking pacientes{% endblock %}
+
+{% block content %}
+<h1 class="text-primary mb-4">top pacientes</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Odontólogo</th>
+            <th>Total de Turnos</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for nombre, apellido, cantidad in reporte %}
+        <tr>
+            <td>{{ nombre }} {{ apellido }}</td>
+            <td>{{ cantidad }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

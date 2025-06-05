@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Turno{% endblock %}
+
+{% block content %}
+<h1>Editar Turno</h1>
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+
+    <div class="mb-3">
+        {{ form.paciente.label(class="form-label") }}
+        {{ form.paciente(class="form-control") }}
+        {% for error in form.paciente.errors %}
+        <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        {{ form.odontologo.label(class="form-label") }}
+        {{ form.odontologo(class="form-control") }}
+        {% for error in form.odontologo.errors %}
+        <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        {{ form.fecha.label(class="form-label") }}
+        {{ form.fecha(class="form-control") }}
+        {% for error in form.fecha.errors %}
+        <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    {{ form.submit(class="btn btn-primary") }}
+</form>
+{% endblock %}
