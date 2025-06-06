@@ -7,7 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 class Usuario(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
-    password_hash = db.Column(db.String(128), nullable=False)
+    password_hash = db.Column(db.String(256), nullable=False)
     rol = db.Column(db.String(20), nullable=False, default='secretaria')
 
     def set_password(self, password):
@@ -25,7 +25,16 @@ class Paciente(db.Model):
     nombre = db.Column(db.String(50), nullable=False)
     apellido = db.Column(db.String(50), nullable=False)
 
-    turnos = db.relationship('Turno', backref='paciente', lazy=True)
+    historias_clinicas = db.relationship(
+        'HistoriaClinica',
+        backref='paciente',
+        cascade="all, delete-orphan",
+        passive_deletes=True
+    )
+
+    def __repr__(self):
+        return f'<Paciente {self.nombre} {self.apellido}>'
+
 
 class Odontologo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -48,14 +57,13 @@ class Turno(db.Model):
 
 class HistoriaClinica(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    paciente_id = db.Column(db.Integer, db.ForeignKey('paciente.id'), nullable=False)
-    fecha = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    descripcion = db.Column(db.Text, nullable=False)
-
-    paciente = db.relationship('Paciente', backref=db.backref('historias_clinicas', lazy=True))
+    paciente_id = db.Column(db.Integer, db.ForeignKey('paciente.id', ondelete="CASCADE"), nullable=False)
+    fecha = db.Column(db.DateTime, default=datetime.utcnow)
+    descripcion = db.Column(db.Text)
 
     def __repr__(self):
         return f'<HistoriaClinica {self.id} - Paciente {self.paciente_id}>'
+
 
 
 class Tratamiento(db.Model):
