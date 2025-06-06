@@ -1,8 +1,8 @@
 """Migración inicial definitiva
 
-Revision ID: d6267b6edde4
+Revision ID: a60e08cc7de4
 Revises: 
-Create Date: 2025-06-06 13:47:17.568722
+Create Date: 2025-06-06 14:57:18.558844
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'd6267b6edde4'
+revision = 'a60e08cc7de4'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -49,11 +49,10 @@ def upgrade():
     )
     op.create_table('turno',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('fecha', sa.DateTime(), nullable=False),
     sa.Column('paciente_id', sa.Integer(), nullable=False),
-    sa.Column('odontologo_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['odontologo_id'], ['odontologo.id'], ),
-    sa.ForeignKeyConstraint(['paciente_id'], ['paciente.id'], ),
+    sa.Column('fecha', sa.DateTime(), nullable=False),
+    sa.Column('motivo', sa.String(length=100), nullable=True),
+    sa.ForeignKeyConstraint(['paciente_id'], ['paciente.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('tratamiento',

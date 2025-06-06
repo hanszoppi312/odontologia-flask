@@ -16,10 +16,6 @@ class Usuario(db.Model, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-
-
-
-
 class Paciente(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(50), nullable=False)
@@ -36,6 +32,20 @@ class Paciente(db.Model):
         return f'<Paciente {self.nombre} {self.apellido}>'
 
 
+class Turno(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    paciente_id = db.Column(db.Integer, db.ForeignKey('paciente.id', ondelete="CASCADE"), nullable=False)
+    fecha = db.Column(db.DateTime, nullable=False)
+    motivo = db.Column(db.String(100))
+    paciente = db.relationship('Paciente', backref='turnos', passive_deletes=True)
+    
+    def __repr__(self):
+        return f'<Turno {self.id} - Paciente {self.paciente_id}>'
+
+
+
+
+
 class Odontologo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(50), nullable=False)
@@ -44,15 +54,7 @@ class Odontologo(db.Model):
 
     turnos = db.relationship('Turno', backref='odontologo', lazy=True)
 
-class Turno(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    fecha = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
-    paciente_id = db.Column(db.Integer, db.ForeignKey('paciente.id'), nullable=False)
-    odontologo_id = db.Column(db.Integer, db.ForeignKey('odontologo.id'), nullable=False)
-
-    def __repr__(self):
-        return f"<Turno {self.fecha} - Paciente {self.paciente_id} - Odontólogo {self.odontologo_id}>"
 
 
 class HistoriaClinica(db.Model):
