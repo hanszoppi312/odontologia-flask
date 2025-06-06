@@ -1,8 +1,8 @@
 """Migración inicial definitiva
 
-Revision ID: a60e08cc7de4
+Revision ID: 270cf85835c8
 Revises: 
-Create Date: 2025-06-06 14:57:18.558844
+Create Date: 2025-06-06 16:09:42.440957
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'a60e08cc7de4'
+revision = '270cf85835c8'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -43,7 +43,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('paciente_id', sa.Integer(), nullable=False),
     sa.Column('fecha', sa.DateTime(), nullable=True),
-    sa.Column('descripcion', sa.Text(), nullable=True),
+    sa.Column('observaciones', sa.Text(), nullable=True),
     sa.ForeignKeyConstraint(['paciente_id'], ['paciente.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
@@ -58,9 +58,9 @@ def upgrade():
     op.create_table('tratamiento',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('historia_clinica_id', sa.Integer(), nullable=False),
-    sa.Column('nombre', sa.String(length=100), nullable=False),
-    sa.Column('descripcion', sa.Text(), nullable=False),
-    sa.ForeignKeyConstraint(['historia_clinica_id'], ['historia_clinica.id'], ),
+    sa.Column('descripcion', sa.String(length=200), nullable=False),
+    sa.Column('fecha', sa.DateTime(), nullable=True),
+    sa.ForeignKeyConstraint(['historia_clinica_id'], ['historia_clinica.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
