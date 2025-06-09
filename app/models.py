@@ -25,7 +25,6 @@ class Paciente(db.Model):
     def __repr__(self):
         return f'<Paciente {self.nombre} {self.apellido}>'
 
-
 # ------------------ HISTORIA CLÍNICA ------------------
 class HistoriaClinica(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -43,30 +42,36 @@ class HistoriaClinica(db.Model):
     def __repr__(self):
         return f'<HistoriaClinica {self.id} - Paciente {self.paciente_id}>'
 
-
 # ------------------ TRATAMIENTO ------------------
 class Tratamiento(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     historia_clinica_id = db.Column(db.Integer, db.ForeignKey('historia_clinica.id', ondelete="CASCADE"), nullable=False)
+    
+    # 🔧 MODIFICADO: agregamos campo nombre
+    nombre = db.Column(db.String(100), nullable=False)
+    
     descripcion = db.Column(db.String(200), nullable=False)
     fecha = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
-        return f'<Tratamiento {self.descripcion}>'
-
+        return f'<Tratamiento {self.nombre}>'
 
 # ------------------ TURNO ------------------
 class Turno(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     paciente_id = db.Column(db.Integer, db.ForeignKey('paciente.id', ondelete="CASCADE"), nullable=False)
+    
+    # 🔧 MODIFICADO: agregamos el odontologo_id (relación faltante)
+    odontologo_id = db.Column(db.Integer, db.ForeignKey('odontologo.id', ondelete="CASCADE"), nullable=False)
+    
     fecha = db.Column(db.DateTime, nullable=False)
     motivo = db.Column(db.String(100))
 
-    paciente = db.relationship('Paciente', backref='turnos', passive_deletes=True)
+    # 🔧 MODIFICADO: agregamos la relación odontologo
+    odontologo = db.relationship('Odontologo', backref='turnos', passive_deletes=True)
 
     def __repr__(self):
         return f'<Turno {self.id} - Paciente {self.paciente_id}>'
-
 
 # ------------------ ODONTOLOGO ------------------
 class Odontologo(db.Model):
@@ -78,13 +83,21 @@ class Odontologo(db.Model):
     def __repr__(self):
         return f'<Odontologo {self.nombre} {self.apellido} - {self.especialidad}>'
 
-
 # ------------------ USUARIO ------------------
+from werkzeug.security import generate_password_hash, check_password_hash
+
 class Usuario(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
     password_hash = db.Column(db.String(256), nullable=False)
     rol = db.Column(db.String(20), nullable=False, default='secretaria')
+
+    # 🔧 AGREGADO: métodos de manejo de contraseñas
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+    
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
     def __repr__(self):
         return f'<Usuario {self.username}>'
