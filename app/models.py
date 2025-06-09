@@ -1,6 +1,7 @@
 from . import db
 from flask_login import UserMixin
 from datetime import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
 
 # ------------------ PACIENTE ------------------
 class Paciente(db.Model):
@@ -46,31 +47,12 @@ class HistoriaClinica(db.Model):
 class Tratamiento(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     historia_clinica_id = db.Column(db.Integer, db.ForeignKey('historia_clinica.id', ondelete="CASCADE"), nullable=False)
-    
-    # 🔧 MODIFICADO: agregamos campo nombre
     nombre = db.Column(db.String(100), nullable=False)
-    
     descripcion = db.Column(db.String(200), nullable=False)
     fecha = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return f'<Tratamiento {self.nombre}>'
-
-# ------------------ TURNO ------------------
-class Turno(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    paciente_id = db.Column(db.Integer, db.ForeignKey('paciente.id', ondelete="CASCADE"), nullable=False)
-    
-    
-    
-    fecha = db.Column(db.DateTime, nullable=False)
-    motivo = db.Column(db.String(100))
-
-    # 🔧 MODIFICADO: agregamos la relación odontologo
-    odontologo = db.relationship('Odontologo', backref='turnos', passive_deletes=True)
-
-    def __repr__(self):
-        return f'<Turno {self.id} - Paciente {self.paciente_id}>'
 
 # ------------------ ODONTOLOGO ------------------
 class Odontologo(db.Model):
@@ -79,22 +61,37 @@ class Odontologo(db.Model):
     apellido = db.Column(db.String(50), nullable=False)
     especialidad = db.Column(db.String(100), nullable=False)
 
-    turnos = db.relationship('Turno', backref='odontologo', cascade="all, delete-orphan", passive_deletes=True)
+    turnos = db.relationship(
+        'Turno',
+        backref='odontologo',
+        cascade="all, delete-orphan",
+        passive_deletes=True
+    )
 
     def __repr__(self):
         return f'<Odontologo {self.nombre} {self.apellido} - {self.especialidad}>'
 
+# ------------------ TURNO ------------------
+class Turno(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    paciente_id = db.Column(db.Integer, db.ForeignKey('paciente.id', ondelete="CASCADE"), nullable=False)
+    odontologo_id = db.Column(db.Integer, db.ForeignKey('odontologo.id', ondelete="CASCADE"), nullable=False)
+    fecha = db.Column(db.DateTime, nullable=False)
+    motivo = db.Column(db.String(100))
+
+    paciente = db.relationship('Paciente', backref='turnos', passive_deletes=True)
+    odontologo = db.relationship('Odontologo', backref='turnos', passive_deletes=True)
+
+    def __repr__(self):
+        return f'<Turno {self.id} - Paciente {self.paciente_id}>'
 
 # ------------------ USUARIO ------------------
-from werkzeug.security import generate_password_hash, check_password_hash
-
 class Usuario(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
     password_hash = db.Column(db.String(256), nullable=False)
     rol = db.Column(db.String(20), nullable=False, default='secretaria')
 
-    # 🔧 AGREGADO: métodos de manejo de contraseñas
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
     
