@@ -289,7 +289,9 @@ def nueva_historia_clinica():
     if form.validate_on_submit():
         historia = HistoriaClinica(
             paciente_id=form.paciente.data,
-            descripcion=form.descripcion.data
+            
+            # 🔧 CORREGIDO: usamos el campo observaciones
+            observaciones=form.observaciones.data
         )
         db.session.add(historia)
         db.session.commit()
@@ -297,6 +299,7 @@ def nueva_historia_clinica():
         return redirect(url_for('historias_clinicas'))
 
     return render_template('nueva_historia_clinica.html', form=form)
+
 
 
 @app.route('/tratamientos')

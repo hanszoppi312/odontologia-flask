@@ -44,15 +44,15 @@ class OdontologoForm(FlaskForm):
 
 class HistoriaClinicaForm(FlaskForm):
     paciente = SelectField('Paciente', coerce=int, validators=[DataRequired()])
-    descripcion = StringField('Descripción', validators=[DataRequired(), Length(min=5)])
+    
+    # 🔧 CAMBIO: ahora se llama igual que el modelo (observaciones)
+    observaciones = StringField('Observaciones', validators=[DataRequired(), Length(min=5)])
+    
     submit = SubmitField('Guardar Historia Clínica')
 
 class TratamientoForm(FlaskForm):
     historia_clinica = SelectField('Historia Clínica', coerce=int, validators=[DataRequired()])
-    
-    # 🔧 MODIFICADO: agregamos el campo nombre (coherente con el modelo)
     nombre = StringField('Nombre del Tratamiento', validators=[DataRequired(), Length(min=2, max=100)])
-    
     descripcion = StringField('Descripción', validators=[DataRequired(), Length(min=5)])
     submit = SubmitField('Guardar Tratamiento')
 
