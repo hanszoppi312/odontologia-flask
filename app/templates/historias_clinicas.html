@@ -13,7 +13,7 @@
     <li class="list-group-item">
         {{ historia.fecha.strftime('%d/%m/%Y %H:%M') }} |
         Paciente: {{ historia.paciente.nombre }} {{ historia.paciente.apellido }} |
-        {{ historia.descripcion }}
+        {{ historia.observaciones }}
     </li>
     {% endfor %}
 </ul>

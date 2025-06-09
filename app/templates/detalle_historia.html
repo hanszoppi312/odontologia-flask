@@ -1,31 +1,33 @@
 {% extends "base.html" %}
 
-{% block title %}Historia Clínica de {{ paciente.nombre }}{% endblock %}
+{% block title %}Detalle Historia Clínica{% endblock %}
 
 {% block content %}
-<h1>Historia Clínica de {{ paciente.nombre }} {{ paciente.apellido }}</h1>
+<h1 class="mb-4 text-success">Historia Clínica de {{ paciente.nombre }} {{ paciente.apellido }}</h1>
 
-    {% if historias %}
-<ul class="list-group">
+{% if historias %}
     {% for historia in historias %}
-    <li class="list-group-item">
-        <strong>Fecha:</strong> {{ historia.fecha.strftime('%d/%m/%Y') }}<br>
-        <strong>Descripción:</strong> {{ historia.descripcion }}<br>
+<div class="card mb-3">
+    <div class="card-body">
+        <h5 class="card-title">Fecha: {{ historia.fecha.strftime('%d/%m/%Y') }}</h5>
+        <p><strong>Observaciones:</strong> {{ historia.observaciones }}</p>
 
         {% if historia.tratamientos %}
-        <strong>Tratamientos:</strong>
+        <h6>Tratamientos:</h6>
         <ul>
             {% for tratamiento in historia.tratamientos %}
-            <li>{{ tratamiento.nombre }} - {{ tratamiento.descripcion }}</li>
+            <li><strong>{{ tratamiento.nombre }}</strong>: {{ tratamiento.descripcion }} ({{ tratamiento.fecha.strftime('%d/%m/%Y') }})</li>
             {% endfor %}
         </ul>
         {% else %}
-        <em>Sin tratamientos registrados.</em>
+        <p>No hay tratamientos registrados.</p>
         {% endif %}
-    </li>
+    </div>
+</div>
     {% endfor %}
-</ul>
-    {% else %}
-<div class="alert alert-info">Este paciente no tiene historias clínicas registradas aún.</div>
-    {% endif %}
+{% else %}
+<div class="alert alert-info">Este paciente aún no tiene historias clínicas.</div>
+{% endif %}
+
+<a href="{{ url_for('historias_clinicas') }}" class="btn btn-secondary">Volver</a>
 {% endblock %}

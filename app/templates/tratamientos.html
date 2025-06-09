@@ -3,20 +3,23 @@
 {% block title %}Tratamientos{% endblock %}
 
 {% block content %}
-<h1 class="text-primary mb-4">Listado de Tratamientos</h1>
+<h1 class="mb-4 text-success">Listado de Tratamientos</h1>
 
-<a href="{{ url_for('nuevo_tratamiento') }}" class="btn btn-success mb-3">Registrar nuevo tratamiento</a>
+<a href="{{ url_for('nuevo_tratamiento') }}" class="btn btn-primary mb-3">Agregar nuevo tratamiento</a>
 
-    {% if tratamientos %}
+{% if tratamientos %}
 <ul class="list-group">
     {% for tratamiento in tratamientos %}
-    <li class="list-group-item">
-        {{ tratamiento.nombre }} | {{ tratamiento.descripcion }} |
-        Historia Clínica de {{ tratamiento.historia_clinica.paciente.nombre }} {{ tratamiento.historia_clinica.paciente.apellido }}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+            <strong>{{ tratamiento.nombre }}</strong> - {{ tratamiento.descripcion }}
+            <br>
+            Fecha: {{ tratamiento.fecha.strftime('%d/%m/%Y') }}
+        </div>
     </li>
     {% endfor %}
 </ul>
-    {% else %}
+{% else %}
 <div class="alert alert-info">No hay tratamientos registrados aún.</div>
-    {% endif %}
+{% endif %}
 {% endblock %}

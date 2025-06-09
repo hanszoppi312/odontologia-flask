@@ -3,27 +3,22 @@
 {% block title %}Nueva Historia Clínica{% endblock %}
 
 {% block content %}
-<h1>Nueva Historia Clínica</h1>
+<h1 class="mb-4 text-success">Agregar Nueva Historia Clínica</h1>
 
 <form method="POST">
     {{ form.hidden_tag() }}
 
     <div class="mb-3">
         {{ form.paciente.label(class="form-label") }}
-        {{ form.paciente(class="form-control") }}
-        {% for error in form.paciente.errors %}
-        <div class="text-danger">{{ error }}</div>
-        {% endfor %}
+        {{ form.paciente(class="form-select") }}
     </div>
 
     <div class="mb-3">
-        {{ form.descripcion.label(class="form-label") }}
-        {{ form.descripcion(class="form-control") }}
-        {% for error in form.descripcion.errors %}
-        <div class="text-danger">{{ error }}</div>
-        {% endfor %}
+        {{ form.observaciones.label(class="form-label") }}
+        {{ form.observaciones(class="form-control") }}
     </div>
 
-    {{ form.submit(class="btn btn-primary") }}
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a href="{{ url_for('historias_clinicas') }}" class="btn btn-secondary">Cancelar</a>
 </form>
 {% endblock %}
