@@ -1,8 +1,8 @@
-"""Migración inicial definitiva
+"""Descripción del cambio
 
-Revision ID: 270cf85835c8
+Revision ID: f08383c7009a
 Revises: 
-Create Date: 2025-06-06 16:09:42.440957
+Create Date: 2025-06-09 10:16:11.619236
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '270cf85835c8'
+revision = 'f08383c7009a'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -58,6 +58,7 @@ def upgrade():
     op.create_table('tratamiento',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('historia_clinica_id', sa.Integer(), nullable=False),
+    sa.Column('nombre', sa.String(length=100), nullable=False),
     sa.Column('descripcion', sa.String(length=200), nullable=False),
     sa.Column('fecha', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['historia_clinica_id'], ['historia_clinica.id'], ondelete='CASCADE'),
