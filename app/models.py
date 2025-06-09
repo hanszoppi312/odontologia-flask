@@ -61,8 +61,7 @@ class Turno(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     paciente_id = db.Column(db.Integer, db.ForeignKey('paciente.id', ondelete="CASCADE"), nullable=False)
     
-    # 🔧 MODIFICADO: agregamos el odontologo_id (relación faltante)
-    odontologo_id = db.Column(db.Integer, db.ForeignKey('odontologo.id', ondelete="CASCADE"), nullable=False)
+    
     
     fecha = db.Column(db.DateTime, nullable=False)
     motivo = db.Column(db.String(100))
@@ -80,8 +79,11 @@ class Odontologo(db.Model):
     apellido = db.Column(db.String(50), nullable=False)
     especialidad = db.Column(db.String(100), nullable=False)
 
+    turnos = db.relationship('Turno', backref='odontologo', cascade="all, delete-orphan", passive_deletes=True)
+
     def __repr__(self):
         return f'<Odontologo {self.nombre} {self.apellido} - {self.especialidad}>'
+
 
 # ------------------ USUARIO ------------------
 from werkzeug.security import generate_password_hash, check_password_hash
