@@ -79,11 +79,9 @@ class Turno(db.Model):
     fecha = db.Column(db.DateTime, nullable=False)
     motivo = db.Column(db.String(100))
 
-    paciente = db.relationship('Paciente', backref='turnos', passive_deletes=True)
-    odontologo = db.relationship('Odontologo', backref='turnos', passive_deletes=True)
-
     def __repr__(self):
         return f'<Turno {self.id} - Paciente {self.paciente_id}>'
+
 
 # ------------------ USUARIO ------------------
 class Usuario(UserMixin, db.Model):
